@@ -34,6 +34,7 @@ function Example() {
   const [profile, setProfile] = useState("");
   const [gender, setGender] = useState("");
   const [id, setId] = useState("");
+  const [status, setStatus] = useState(false);
 
   return (
     <>
@@ -59,6 +60,7 @@ function Example() {
             setProfile("");
             setGender("");
             setId("");
+            setStatus(false);
           }}
         >
           Add User Data
@@ -80,6 +82,7 @@ function Example() {
               <th>Hobbies</th>
               <th>Profile</th>
               <th>Gender</th>
+              <th>Status</th>
               <th>Update</th>
               <th>Delete</th>
             </tr>
@@ -93,9 +96,19 @@ function Example() {
                 <td>{item.date}</td>
                 <td>{item.phone}</td>
                 <td>{item.country}</td>
-                <td>{item.hobbie.join(', ')}</td>
+                <td>{item.hobbie.join(", ")}</td>
                 <td>{item.profile}</td>
                 <td>{item.gender}</td>
+                <td>
+                  <div className="form-check form-switch">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id="flexSwitchCheckChecked"
+                      checked={item.status ? true : false}
+                    />
+                  </div>
+                </td>
                 <td>
                   <Button
                     onClick={() => {
@@ -103,7 +116,6 @@ function Example() {
                       handleShow();
                       setFormName("Edit Form");
                       setButtonName("Save Changes");
-                      console.log(item);
                       setName(item.name);
                       setEmail(item.email);
                       setDate(item.date);
@@ -113,6 +125,7 @@ function Example() {
                       setProfile(item.profile);
                       setGender(item.gender);
                       setId(item.id);
+                      setStatus(item.status);
                     }}
                     variant="primary"
                   >
@@ -159,6 +172,7 @@ function Example() {
               hobbie: hobbie,
               profile: profile,
               gender: gender,
+              status: status,
             }}
             validateOnChange={true}
             validationSchema={Schema}
@@ -592,6 +606,11 @@ function Example() {
                       className=" form-check-input"
                       type="checkbox"
                       id="flexSwitchCheckDefault"
+                      name="status"
+                      value={values.status}
+                      checked={values.status ? true : false}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
                     />
                     <label
                       className="form-check-label"
